@@ -1,43 +1,35 @@
 <?php
+
+
+function prosesData($kata_in, $string_in)
+{
+
+    $jumlah_kata = 0;
+    $arr_string = str_split($string_in);
+    $jml_karaketer_kata = strlen($kata_in);
+    $jml_arr_string = count($arr_string);
+    // proses mencari kata dari kiri
+    for ($i = 0; $i <= ($jml_arr_string - $jml_karaketer_kata); $i++) {
+        $kata = "";
+        for ($j = $i; $j < ($i + $jml_karaketer_kata); $j++) {
+            $kata .= $arr_string[$j];
+        }
+        if ($kata == $kata_in) {
+            $jumlah_kata += 1;
+        }
+    }
+
+    return $jumlah_kata;
+}
+
+
+
 if (isset($_POST['proses'])) {
 
-    $kata_kiri = $_POST['string'];
-    $kata_kanan = strrev($kata_kiri);
-    $cari = $_POST['kata'];
-    $jumlah_kata = 0;
-    $arr_kata_kiri = str_split($kata_kiri);
-    $arr_kata_kanan = str_split($kata_kanan);
-    $arr_cari = str_split($cari);
-    $jml_arr_kata = count($arr_kata_kiri);
-    $jml_arr_cari = count($arr_cari);
-    // proses mencari kata dari kiri
-    for ($i = 0; $i <= ($jml_arr_kata - $jml_arr_cari); $i++) {
-        $kata = "";
-        for ($j = $i; $j < ($i + $jml_arr_cari); $j++) {
-            $kata .= $arr_kata_kiri[$j];
-        }
-        if ($kata == $cari) {
-            $jumlah_kata += 1;
-        }
-
-
-        // var_dump($kata);
-    }
-
-    // proses mencari kata dari kanan
-    for ($i = 0; $i <= ($jml_arr_kata - $jml_arr_cari); $i++) {
-        $kata = "";
-        for ($j = $i; $j < ($i + $jml_arr_cari); $j++) {
-            $kata .= $arr_kata_kanan[$j];
-        }
-        if ($kata == $cari) {
-            $jumlah_kata += 1;
-        }
-
-
-        // var_dump($kata);
-    }
-    echo "data ditemukan " . $jumlah_kata . " kali";
+    $nilai_dari_kiri = prosesData($_POST['kata'], $_POST['string']);
+    $nilai_dari_kanan = prosesData($_POST['kata'], strrev($_POST['string']));
+    $jumlah = $nilai_dari_kanan + $nilai_dari_kiri;
+    echo "Jadi data yang ditemuka " . $jumlah . " kali";
 }
 ?>
 <h4>Mencari Jumlah Kata dalam suatu string</h4>
